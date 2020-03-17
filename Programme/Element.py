@@ -10,8 +10,8 @@ class Element:
 
     position = None
     pheromone = None
-    listAnimal = list()
-    listPath = list()
+    list_animal = list()
+    list_path = list()
 
     def __init__(self, radius, capacity, x, y):
         self.radius = radius
@@ -21,4 +21,18 @@ class Element:
         self.pheromone = Pheromone(0, 0, 0)
 
     def add_path(self, path):
-        self.listPath.append(path)
+        self.list_path.append(path)
+
+    def add_animal(self, animal):
+        temp = animal.get_size()
+        if temp > self.capacity[1] - self.capacity[0]:
+            return False
+        self.capacity[0] += temp
+
+        self.list_animal.append(animal)
+
+    def get_path(self):
+        return self.list_path
+
+    def get_pheromone(self):
+        return self.pheromone

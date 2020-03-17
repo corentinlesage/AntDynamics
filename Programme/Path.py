@@ -4,12 +4,18 @@ class Path:
 	end = None
 	
 	cost = None
-	max_capacity = None
-	capacity = None
+	capacity = list()
 
 	def __init__(self, start, end, cost, max_capacity):
 		self.start = start
 		self.end = end
 		self.cost = cost
-		self.max_capacity = max_capacity
-		capacity = 0
+		self.capacity.append(0)
+		self.capacity.append(max_capacity)
+
+
+	def get_start(self):
+		return self.start
+
+	def get_end(self):
+		return self.end

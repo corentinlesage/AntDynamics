@@ -30,7 +30,7 @@ class Environment:
             if len(self.list_element) > i:
                 return False
 
-        list_temp = []
+        list_temp = list()
 
         for i in list_element:
             list_temp.append(self.list_element[i])

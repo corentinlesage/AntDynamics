@@ -1,3 +1,6 @@
+from random import random
+
+
 class Pheromone:
     pheromone = list()
 
@@ -11,3 +14,6 @@ class Pheromone:
             i -= 5
             if i < 0:
                 i = 0
+
+    def is_detected(self, p):
+        return self.pheromone[p] <= random.random()
