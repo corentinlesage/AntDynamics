@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from random import random
+import random
 
 
 class Animal(ABC):
@@ -9,50 +9,93 @@ class Animal(ABC):
     damage = None
     hunger = list()
     thirst = list()
+    is_travelling = None
 
     def __init__(self, element, life, size, damage, hunger, thirst):
         self.element = element
+        self.life = list()
         self.life.append(life)
         self.life.append(life)
         self.size = size
         self.damage = damage
-        self.hunger.append(0)
+
+        self.hunger = list()
         self.hunger.append(hunger)
-        self.thirst.append(0)
+        self.hunger.append(hunger)
+
+        self.thirst = list()
+        self.thirst.append(thirst)
         self.thirst.append(thirst)
 
-    def death(self):
-        pass
+        self.is_travelling = 0
+
 
     def receive_damage(self, damage):
         self.life[0] -= damage
 
-        if self.life[0] < 0:
-            self.death()
+    def attack(self, enemy):
+        enemy.receive_damage(self.damage)
+
+    def alive(self):
+
+        if self.life[0] <= 0: return False
+
+        if self.hunger[0] > 0:
+            self.hunger[0] -= 1
+        else: return False
+
+        if self.thirst[0] > 0:
+            self.thirst[0] -= 1
+        else: return False
+
+        return True
+
+    def is_alive(self):
+        return self.life[0] > 0 and self.hunger[0] > 0 and self.thirst[0] > 0
 
     def chose_path(self):
-        list_path = self.element.get_path()
+        list_path = self.element.list_path
 
         while True:
             list_int = list()
             for i in list_path:
-                temp = random.randit(0, len(list_path) - 1)
+                temp = random.randint(0, len(list_path) - 1)
+
                 if not list_int.__contains__(temp):
-                    list_int.__add__(temp)
-                if self.move_to_path(list_path[temp]):
-                    return True
+                    list_int.append(temp)
+                    if self.move_to_path(list_path[temp]):
+                        return True
         return False
 
     def move_to_path(self, path):
         if path.get_start() == self.element:
-            return self.move_to_element(path.get_end())
-        return self.move_to_element(path.get_start())
+            if self.move_to_element(path.get_end()):
+                self.element = path.get_end()
+                self.is_travelling = path.cost
+                return True
+        elif self.move_to_element(path.get_start()):
+            self.element = path.get_start()
+            self.is_travelling = path.cost
+            return True
+        return False
 
     def move_to_element(self, element):
         pass
+
+    def travelling(self):
+        if self.is_travelling > 0:
+            self.is_travelling -=1
+            return True
+        return False
 
     def get_size(self):
         return self.size
 
     def is_ant(self):
         return False
+
+    def action(self):
+        pass
+
+    def post(self):
+        pass

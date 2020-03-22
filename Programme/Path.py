@@ -10,6 +10,8 @@ class Path:
 		self.start = start
 		self.end = end
 		self.cost = cost
+
+		self.capacity = list()
 		self.capacity.append(0)
 		self.capacity.append(max_capacity)
 

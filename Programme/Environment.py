@@ -15,26 +15,19 @@ class Environment:
         self.list_element.append(Element(radius, capacity, x, y))
 
     def add_path(self, element1, element2, cost, capacity):
-        if len(self.list_element) > element1 or len(self.list_element) > element2:
-            return False
 
         path = Path(self.list_element[element1], self.list_element[element2], cost, capacity)
+        path2 = Path(self.list_element[element2], self.list_element[element1], cost, capacity)
 
-        self.list_element[element1].append(path)
-        self.list_element[element2].append(path)
+        self.list_element[element1].add_path(path)
+        self.list_element[element2].add_path(path2)
 
-        return True
-
-    def add_anthill(self, list_element):
-        for i in list_element:
-            if len(self.list_element) > i:
-                return False
+    def add_anthill(self, name, list_element):
 
         list_temp = list()
 
         for i in list_element:
             list_temp.append(self.list_element[i])
 
-        self.list_anthill.append(Anthill(list_temp))
-
-        return True
+        print("creation of a colony")
+        self.list_anthill.append(Anthill(name, list_temp))
