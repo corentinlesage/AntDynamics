@@ -24,13 +24,18 @@ def main():
 
         for i in environment.list_element:
 
-            #i.post()
+            i.pheromone.decrease()
 
             for j in i.list_animal:
 
                 j.post()
 
-                if j.alive() and (not j.travelling()):
+                if not j.alive():
+                    if j.decomposition():
+                        i.list_animal.remove(j)
+                        del j
+
+                elif (not j.travelling()):
                     j.action()
 
         n = n + 1

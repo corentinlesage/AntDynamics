@@ -70,11 +70,15 @@ class Animal(ABC):
     def move_to_path(self, path):
         if path.get_start() == self.element:
             if self.move_to_element(path.get_end()):
+                self.element.list_animal.remove(self)
                 self.element = path.get_end()
+                self.element.list_animal.append(self)
                 self.is_travelling = path.cost
                 return True
         elif self.move_to_element(path.get_start()):
+            self.element.list_animal.remove(self)
             self.element = path.get_start()
+            self.element.list_animal.append(self)
             self.is_travelling = path.cost
             return True
         return False
@@ -87,6 +91,25 @@ class Animal(ABC):
             self.is_travelling -=1
             return True
         return False
+
+    def decomposition(self):
+        self.size -= 0.01
+
+        if self.size <= 0:
+            return True
+        else:
+            return False
+
+    def eat(self, food):
+
+        if food.size > 0.1:
+            food.size -= 0.1
+            self.hunger += 10
+
+        else :
+            self.hunger += food.size *10
+            self.element.list_animal.remove(food)
+            del food
 
     def get_size(self):
         return self.size

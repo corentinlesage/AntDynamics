@@ -13,15 +13,16 @@ class Pheromone:
 
     def decrease(self):
         for i in self.pheromone:
-            i -= 0.05
-            if i < 0:
+            if i > 0.5:
+                i -= 0.05
+            else:
                 i = 0
 
     def add_pheromone(self, p, quantity):
         self.pheromone[p] += quantity
 
     def is_detected(self, p):
-        return self.pheromone[p] <= random.random()
+        return self.pheromone[p] > random.random()
 
     def post(self):
         print("danger: ", self.pheromone[0])

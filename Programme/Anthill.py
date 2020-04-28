@@ -8,6 +8,7 @@ class Anthill:
     name = None
     entrance = list()
     colony = list()
+    storage = list()
 
     def __init__(self, name, entrance):
         self.name = name
@@ -16,8 +17,12 @@ class Anthill:
         self.entrance = entrance
 
         self.colony = list()
-        #self.colony.append(Queen(self, entrance[0]))
+        # self.colony.append(Queen(self, entrance[0]))
         self.colony.append(Soldier(self, entrance[0]))
+
+        self.storage = list()
+        self.storage.append(0)
+        self.storage.append(0)
 
         for c in self.colony:
             self.add_animal(entrance[0], c)
@@ -32,3 +37,16 @@ class Anthill:
         entrance.list_animal.append(animal)
 
         return True
+
+    def refill(self, type):
+
+        if self.storage[type] == 0:
+            return 0
+
+        elif self.storage[type] >= 10:
+            self.storage[type] -= 10
+            return 10
+
+        temp = self.storage[type]
+        self.storage[type] = 0
+        return temp
