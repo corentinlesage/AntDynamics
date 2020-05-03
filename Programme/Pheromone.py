@@ -19,7 +19,10 @@ class Pheromone:
                 i = 0
 
     def add_pheromone(self, p, quantity):
-        self.pheromone[p] += quantity
+        if self.pheromone[p] + quantity <= 1:
+            self.pheromone[p] += quantity
+        else:
+            self.pheromone[p] = 1
 
     def is_detected(self, p):
         return self.pheromone[p] > random.random()

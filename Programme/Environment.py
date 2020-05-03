@@ -1,6 +1,7 @@
 from Element import Element
 from Path import Path
 from Anthill import Anthill
+from Supply import Supply
 
 
 class Environment:
@@ -31,3 +32,8 @@ class Environment:
 
         print("creation of a colony")
         self.list_anthill.append(Anthill(name, list_temp))
+
+
+    def add_supply(self, element, quantity, type):
+
+        self.list_element[element].list_supply.append(Supply(self.list_element[element], quantity, type))

@@ -7,39 +7,64 @@ def main():
     print('Test 1 Create a basic environment to make an ant travel between 2 elements')
     environment = Environment()
 
-    environment.add_element(1, 1, 0, 0)
-    environment.add_element(2, 2, 4, -3)
-    environment.add_element(3, 3, -5, 4)
+    environment.add_element(1, 5, 0, 0)
+    environment.add_element(3, 3, 4, -3)
+    environment.add_element(1, 4, -5, 4)
 
-    environment.add_path(0, 1, 1, 1)
-    environment.add_path(0, 2, 2, 2)
+    environment.add_element(3, 7, 3, -4)
+    environment.add_element(3, 4, -4, 7)
+
+    environment.add_path(0, 1, 1, 4)
+    environment.add_path(0, 2, 2, 4)
+
+    environment.add_path(1, 3, 1, 4)
+    environment.add_path(2, 4, 2, 3)
+
+    environment.add_supply(3, 1000, -1)
+    environment.add_supply(4, 1000, 1)
 
     environment.add_anthill("Home", [0])
 
     n = 1
 
-    while n <= 11:
+    while n <= 20:
 
         print ("\nTurn number", n)
+
+        temp_list_animal = list()
+
+        environment.list_anthill[0].post()
 
         for i in environment.list_element:
 
             i.pheromone.decrease()
 
+            for j in i.list_supply:
+                j.post()
+                j.decomposition()
+
             for j in i.list_animal:
 
-                j.post()
+                if j not in temp_list_animal:
+                    temp_list_animal.append(j)
+                    j.post()
 
-                if not j.alive():
-                    if j.decomposition():
-                        i.list_animal.remove(j)
-                        del j
-
-                elif (not j.travelling()):
-                    j.action()
+                    if j.alive():
+                        if not j.travelling():
+                            j.action()
 
         n = n + 1
         #time.sleep(6)
 
+    for i in environment.list_element:
+        i.post()
+        print("nombre d'animaux: ", len(i.list_animal))
+        print("nombre de tas: ", len(i.list_supply))
+
+        temp = 0
+        for j in i.list_path:
+            temp += j.capacity[0]
+
+        print("taille total d'animaux en trajets: ", temp)
 
 main()

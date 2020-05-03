@@ -1,9 +1,14 @@
 from abc import ABC, abstractmethod
 import random
 
+import self as self
+
+from Supply import Supply
+
 
 class Animal(ABC):
     element = None
+    path = None
     life = list()
     size = None
     damage = None
@@ -13,6 +18,7 @@ class Animal(ABC):
 
     def __init__(self, element, life, size, damage, hunger, thirst):
         self.element = element
+        self .path = None
         self.life = list()
         self.life.append(life)
         self.life.append(life)
@@ -29,6 +35,17 @@ class Animal(ABC):
 
         self.is_travelling = 0
 
+    def __delete__(self):
+
+        if self.is_ant() and self.home.entrance.contains(self.element):
+            pass
+        else:
+            self.element.capacity -= self.size
+
+        self.element.list_animal.remove(self)
+
+        if self.path is not None:
+            self.path.capacity[0] -= self.size
 
     def receive_damage(self, damage):
         self.life[0] -= damage
@@ -68,48 +85,58 @@ class Animal(ABC):
         return False
 
     def move_to_path(self, path):
-        if path.get_start() == self.element:
-            if self.move_to_element(path.get_end()):
-                self.element.list_animal.remove(self)
-                self.element = path.get_end()
-                self.element.list_animal.append(self)
-                self.is_travelling = path.cost
-                return True
-        elif self.move_to_element(path.get_start()):
-            self.element.list_animal.remove(self)
-            self.element = path.get_start()
-            self.element.list_animal.append(self)
-            self.is_travelling = path.cost
-            return True
+        if path.capacity[0] + self.size <= path.capacity[1]:
+            if path.get_start() == self.element:
+                if path.get_end().capacity[0] + self.size <= path.get_end().capacity[1]:
+
+                    if self.move_to_element(path.get_end()):
+
+                        if path.get_end().add_animal(self):
+                            self.element.remove_animal(self)
+                            self.element = path.get_end()
+
+                            self.is_travelling = path.cost
+                            self.path = path
+                            path.capacity[0] += self.size
+                            return True
+
         return False
 
     def move_to_element(self, element):
         pass
 
     def travelling(self):
-        if self.is_travelling > 0:
-            self.is_travelling -=1
+        if  self.is_travelling > 0:
+            self.is_travelling -= 1
             return True
+
+        if self.path is not None:
+            self.path.capacity[0] -= self.size
+            self.path = None
         return False
 
-    def decomposition(self):
-        self.size -= 0.01
+    def convert_to_food(self):
 
-        if self.size <= 0:
-            return True
+        self.element.list_supply.append(Supply(self.element, self.size*10, 1))
+
+        del self
+
+    def consume(self, supply):
+
+        temp = 0
+
+        if supply.quantity > 10:
+            supply.quantity -= 10
+            temp = 10
+
         else:
-            return False
+            temp = supply.quantity
+            del supply
 
-    def eat(self, food):
-
-        if food.size > 0.1:
-            food.size -= 0.1
-            self.hunger += 10
-
-        else :
-            self.hunger += food.size *10
-            self.element.list_animal.remove(food)
-            del food
+        if supply.type == -1:
+            self.thirst[0] += temp
+        elif supply.type == 1:
+            self.hunger[0] += temp
 
     def get_size(self):
         return self.size

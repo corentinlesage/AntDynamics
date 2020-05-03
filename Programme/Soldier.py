@@ -5,7 +5,7 @@ from Role import Role
 class Soldier(Ant):
 
     def __init__(self, anthill, element):
-        Ant.__init__(self, element, 10, 2, 3, 10, 10, anthill, 100)
+        Ant.__init__(self, element, 80, 2, 3, 80, 80, anthill, 500)
         self.role = Role.SEARCH
 
     def move_to_element(self, element):
@@ -29,23 +29,26 @@ class Soldier(Ant):
             else:
                 return True
 
-        if self.role == Role.FLEE:
+        if self.role == Role.FLEE or self.role == Role.REST:
 
             temp = self.find_home_entrance()
             return self.element.distance(temp) >= element.distance(temp) and (not pheromone.is_detected(0))
 
     def action(self):
 
+        if not self.is_alive():
+            self.convert_to_food()
+
         if self.need_rest() != 0:
-            self.role == Role.FLEE
+            self.role == Role.REST
 
         if self.role == Role.SEARCH:
-            food = self.element.is_food()
-            if food is not None:
+            supply = self.element.is_supply()
+            if supply is not None:
                 self.emit_pheromone(1, 0.15)
 
                 if self.has_space():
-                    self.eat(self, food)
+                    self.consume(supply)
                     return True
                 else:
                     self.chose_path()
@@ -80,17 +83,23 @@ class Soldier(Ant):
                 self.action()
                 return True
 
-        if self.role == Role.FLEE:
+        if self.role == Role.FLEE or self.role == Role.REST:
             if self.element in self.home.entrance:
-                if self.has_space() != 0:
-                    if not self.eat_base():
-                        if not self.drink_base():
-                            self.role = Role.SEARCH
-                            self.action()
-                            return True
+                self.role = Role.REST
+
+                if self.has_space() != 0 :
+                    if not self.consume_base():
+
+                        self.role = Role.SEARCH
+                        self.action()
+                        return True
+
+                    if self.has_space() != 0:
+                        return True
 
             else:
-                self.role == Role.SEARCH
+                if self.role == Role.FLEE:
+                    self.emit_pheromone(0, 0.15)
                 self.chose_path()
                 return True
         return False

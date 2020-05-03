@@ -15,6 +15,12 @@ class Ant(Animal):
         self.age.append(0)
         self.age.append(lifespan)
 
+    def __delete__(self, instance):
+
+        self.home.colony.remove(self)
+
+        super(Animal, self).__delete__()
+
     def alive(self):
 
         if self.life[0] <= 0: return False
@@ -47,7 +53,7 @@ class Ant(Animal):
         else:
             self.emit_pheromone(0, 0.15)
 
-    def move_to_element(self, element):
+    def move_to_element(self, element, path):
         pass
 
     def action(self):
@@ -68,40 +74,41 @@ class Ant(Animal):
         self.element.get_pheromone().add_pheromone(p, quantity)
 
     def has_space(self):
-        return self.need_refill(0.90)
+        return self.need_refill(10)
 
     def need_rest(self):
-        return self.need_refill(0.25)
+        return self.need_refill(80)
 
     def need_refill(self, coef):
-        if self.hunger[0] < self.hunger[1] * coef:
+        if self.hunger[0] < self.hunger[1] - coef:
             return -1
-        if self.hunger[0] < self.thirst[1] * coef:
+        if self.thirst[0] < self.thirst[1] - coef:
             return 1
         return 0
 
-    def eat_base(self):
-        if self.hunger[0] < self.hunger[1] * 0.9:
-            eat = 0
-            if self.home.storage[0] > 10:
-                eat = 10
-                self.home.storage[0] -= 10
-            else:
-                eat = self.home.storage[0]
-                self.home.storage[0] = 0
-            self.hunger[0] += eat
 
-    def drink_base(self):
-        if self.thirst[0] < self.thirst[1] * 0.9:
-            drink = 0
-            if self.home.storage[0] > 10:
-                drink = 10
-                self.home.storage[0] -= 10
-            else:
-                drink = self.home.storage[0]
-                self.home.storage[0] = 0
-            self.thirst[0] += drink
+    def consume_base(self):
+        ind = -1
+
+        if self.hunger[0] < self.hunger[1] - 10:
+            ind = 0
+        elif self.thirst[0] < self.thirst[1] - 10:
+            ind = 1
+
+        if self.home.storage[ind] > 10:
+            eat = 10
+            self.home.storage[ind] -= 10
+        else:
+            eat = self.home.storage[ind]
+            self.home.storage[ind] = 0
+
+        if ind == 0:
+            self.hunger[0] += eat
             return True
+        else:
+            self.thirst[0] += eat
+            return True
+
         return False
 
     def is_ant(self):

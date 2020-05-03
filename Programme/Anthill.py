@@ -2,6 +2,7 @@ import Element
 import Ant
 from Queen import Queen
 from Soldier import Soldier
+from Worker import Worker
 
 
 class Anthill:
@@ -19,24 +20,14 @@ class Anthill:
         self.colony = list()
         # self.colony.append(Queen(self, entrance[0]))
         self.colony.append(Soldier(self, entrance[0]))
+        self.colony.append(Worker(self, entrance[0], 10))
 
         self.storage = list()
         self.storage.append(0)
         self.storage.append(0)
 
         for c in self.colony:
-            self.add_animal(entrance[0], c)
-
-    def add_animal(self, entrance, animal):
-        if not animal.is_ant():
-            temp = animal.get_size()
-            if temp > entrance.capacity[1] - entrance.capacity[0]:
-                return False
-            entrance.capacity[0] += temp
-
-        entrance.list_animal.append(animal)
-
-        return True
+            entrance[0].add_animal(c)
 
     def refill(self, type):
 
@@ -50,3 +41,13 @@ class Anthill:
         temp = self.storage[type]
         self.storage[type] = 0
         return temp
+
+    def post(self):
+
+        print("Anthill:  ", self.name)
+
+
+        print("Entrances: ", len(self.entrance))
+        print("Ants: ", len(self.colony))
+        print("Supply: ")
+        print("Food: ", self.storage[0], "Water: ", self.storage[1])

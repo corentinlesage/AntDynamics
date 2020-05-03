@@ -5,5 +5,7 @@ class Role(Enum):
     PASSIVE = 1
     SEARCH = 2
     FLEE = 3
-    ATTACK = 4
-    HARVEST = 5
+    REST = 4
+    ATTACK = 5
+    HARVEST = 6
+
