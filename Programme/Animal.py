@@ -1,9 +1,9 @@
 from abc import ABC, abstractmethod
 import random
 
-import self as self
 
-from Supply import Supply
+
+from Programme.Supply import Supply
 
 
 class Animal(ABC):

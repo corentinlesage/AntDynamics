@@ -1,8 +1,8 @@
 import Element
 import Ant
 from Queen import Queen
-from Soldier import Soldier
-from Worker import Worker
+from Programme.Soldier import Soldier
+from Programme.Worker import Worker
 
 
 class Anthill:

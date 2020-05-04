@@ -1,5 +1,5 @@
 import sys
-from Animal import Animal
+from Programme.Animal import Animal
 
 
 class Ant(Animal):

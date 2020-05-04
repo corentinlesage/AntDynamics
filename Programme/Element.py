@@ -1,6 +1,6 @@
 from Path import Path
-from Position import Position
-from Pheromone import Pheromone
+from Programme.Position import Position
+from Programme.Pheromone import Pheromone
 from Animal import Animal
 
 

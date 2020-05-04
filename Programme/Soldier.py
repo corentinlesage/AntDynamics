@@ -1,5 +1,5 @@
-from Ant import Ant
-from Role import Role
+from Programme.Ant import Ant
+from Programme.Role import Role
 
 
 class Soldier(Ant):

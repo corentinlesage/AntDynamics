@@ -1,6 +1,6 @@
-from Ant import Ant
-from Role import Role
-from Supply import Supply
+from Programme.Ant import Ant
+from Programme.Role import Role
+from Programme.Supply import Supply
 
 
 class Worker(Ant):

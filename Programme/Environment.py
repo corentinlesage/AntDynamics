@@ -1,7 +1,7 @@
-from Element import Element
-from Path import Path
-from Anthill import Anthill
-from Supply import Supply
+from Programme.Element import Element
+from Programme.Path import Path
+from Programme.Anthill import Anthill
+from Programme.Supply import Supply
 
 
 class Environment:
