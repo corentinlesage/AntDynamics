@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 from Programme.Queen import Queen
+=======
+import Element
+import Ant
+from Queen import Queen
+>>>>>>> f7b05eea38c93b6a9724657e157c75a8741935f5
 from Programme.Soldier import Soldier
 from Programme.Worker import Worker
 

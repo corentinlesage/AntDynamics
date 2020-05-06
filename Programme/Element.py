@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 from Programme.Position import Position
 from Programme.Pheromone import Pheromone
+=======
+from Path import Path
+from Programme.Position import Position
+from Programme.Pheromone import Pheromone
+from Animal import Animal
+>>>>>>> f7b05eea38c93b6a9724657e157c75a8741935f5
 
 
 class Element:

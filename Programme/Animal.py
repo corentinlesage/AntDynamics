@@ -1,6 +1,11 @@
 from abc import ABC, abstractmethod
 import random
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> f7b05eea38c93b6a9724657e157c75a8741935f5
 from Programme.Supply import Supply
 
 
