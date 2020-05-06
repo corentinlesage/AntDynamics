@@ -1,11 +1,9 @@
-from Ant import Ant
-from Role import Role
-from Supply import Supply
+from Programme.Ant import Ant
+from Programme.Role import Role
+from Programme.Supply import Supply
 
 
 class Worker(Ant):
-
-    
     supply = list()
 
     def __init__(self, anthill, element, max_storage):
@@ -27,7 +25,6 @@ class Worker(Ant):
         return True
 
         if self.role == Role.FLEE or self.role == Role.HARVEST or self.role == Role.REST:
-
             temp = self.find_home_entrance()
             return self.element.distance(temp) >= element.distance(temp) and (not pheromone.is_detected(0))
 
@@ -39,7 +36,7 @@ class Worker(Ant):
         if self.role == Role.SEARCH:
             supply = self.element.is_supply()
             if supply is not None:
-                if self.has_space() != 0:
+                if self.has_space() == supply.type:
                     self.consume(supply)
                     return True
                 else:
@@ -67,7 +64,7 @@ class Worker(Ant):
                     self.role = Role.SEARCH
                     return True
 
-                else :
+                else:
                     self.chose_path()
                     return True
 
@@ -75,9 +72,8 @@ class Worker(Ant):
             if self.element in self.home.entrance:
                 self.role = Role.REST
 
-                if self.has_space() != 0 :
+                if self.has_space() != 0:
                     if not self.consume_base():
-
                         self.role = Role.SEARCH
                         self.action()
                         return True
@@ -110,7 +106,7 @@ class Worker(Ant):
 
         for i in self.element.list_animal:
             if i.is_ant():
-                if i.home == self.home:
+                if i.home == self.home and i != self:
                     bar = i.has_space()
 
                     if bar == self.supply[0].type:
@@ -149,7 +145,6 @@ class Worker(Ant):
         self.supply[0].__delete__()
         self.supply[0] = None
 
-
     def post(self):
 
         self.element.post()
@@ -172,4 +167,5 @@ class Worker(Ant):
 
             if self.is_travelling > 0: print("is travelling for ", self.is_travelling, "turns")
 
-        else: print("is dead")
+        else:
+            print("is dead")

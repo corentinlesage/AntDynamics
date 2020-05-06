@@ -1,7 +1,7 @@
-from Element import Element
-from Path import Path
-from Anthill import Anthill
-from Supply import Supply
+from Programme.Element import Element
+from Programme.Path import Path
+from Programme.Anthill import Anthill
+from Programme.Supply import Supply
 
 
 class Environment:
@@ -16,7 +16,6 @@ class Environment:
         self.list_element.append(Element(radius, capacity, x, y))
 
     def add_path(self, element1, element2, cost, capacity):
-
         path = Path(self.list_element[element1], self.list_element[element2], cost, capacity)
         path2 = Path(self.list_element[element2], self.list_element[element1], cost, capacity)
 
@@ -24,7 +23,6 @@ class Environment:
         self.list_element[element2].add_path(path2)
 
     def add_anthill(self, name, list_element):
-
         list_temp = list()
 
         for i in list_element:
@@ -33,7 +31,5 @@ class Environment:
         print("creation of a colony")
         self.list_anthill.append(Anthill(name, list_temp))
 
-
     def add_supply(self, element, quantity, type):
-
-        self.list_element[element].list_supply.append(Supply(self.list_element[element], quantity, type))
+        Supply(self.list_element[element], quantity, type)

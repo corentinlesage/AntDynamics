@@ -8,4 +8,3 @@ class Role(Enum):
     REST = 4
     ATTACK = 5
     HARVEST = 6
-

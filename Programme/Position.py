@@ -1,5 +1,6 @@
 import math
 
+
 class Position:
     x = None
     y = None

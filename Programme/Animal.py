@@ -1,9 +1,7 @@
 from abc import ABC, abstractmethod
 import random
 
-import self as self
-
-from Supply import Supply
+from Programme.Supply import Supply
 
 
 class Animal(ABC):
@@ -18,7 +16,7 @@ class Animal(ABC):
 
     def __init__(self, element, life, size, damage, hunger, thirst):
         self.element = element
-        self .path = None
+        self.path = None
         self.life = list()
         self.life.append(life)
         self.life.append(life)
@@ -35,9 +33,11 @@ class Animal(ABC):
 
         self.is_travelling = 0
 
+        self.element.add_animal(self)
+
     def __delete__(self):
 
-        if self.is_ant() and self.home.entrance.contains(self.element):
+        if self.is_ant() and self.element in self.home.entrance:
             pass
         else:
             self.element.capacity -= self.size
@@ -53,17 +53,30 @@ class Animal(ABC):
     def attack(self, enemy):
         enemy.receive_damage(self.damage)
 
+    def heal(self):
+
+        if self.life[0] < self.life[1]:
+            self.life[0] += (self.hunger[0] / self.hunger[1] + self.thirst[0] / self.thirst[1]) * self.size
+
+            if self.life[0] > self.life[1]:
+                self.life[0] = self.life[1]
+
     def alive(self):
 
-        if self.life[0] <= 0: return False
+        if self.life[0] <= 0:
+            return False
+
+        self.heal()
 
         if self.hunger[0] > 0:
             self.hunger[0] -= 1
-        else: return False
+        else:
+            return False
 
         if self.thirst[0] > 0:
             self.thirst[0] -= 1
-        else: return False
+        else:
+            return False
 
         return True
 
@@ -106,7 +119,7 @@ class Animal(ABC):
         pass
 
     def travelling(self):
-        if  self.is_travelling > 0:
+        if self.is_travelling > 0:
             self.is_travelling -= 1
             return True
 
@@ -117,7 +130,7 @@ class Animal(ABC):
 
     def convert_to_food(self):
 
-        self.element.list_supply.append(Supply(self.element, self.size*10, 1))
+        self.element.list_supply.append(Supply(self.element, self.size * 10, 1))
 
         del self
 

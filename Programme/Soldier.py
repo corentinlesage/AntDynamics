@@ -1,9 +1,8 @@
-from Ant import Ant
-from Role import Role
+from Programme.Ant import Ant
+from Programme.Role import Role
 
 
 class Soldier(Ant):
-
     def __init__(self, anthill, element):
         Ant.__init__(self, element, 80, 2, 3, 80, 80, anthill, 500)
         self.role = Role.SEARCH
@@ -30,7 +29,6 @@ class Soldier(Ant):
                 return True
 
         if self.role == Role.FLEE or self.role == Role.REST:
-
             temp = self.find_home_entrance()
             return self.element.distance(temp) >= element.distance(temp) and (not pheromone.is_detected(0))
 
@@ -47,7 +45,7 @@ class Soldier(Ant):
             if supply is not None:
                 self.emit_pheromone(1, 0.15)
 
-                if self.has_space():
+                if self.has_space() == supply.type:
                     self.consume(supply)
                     return True
                 else:
@@ -78,7 +76,7 @@ class Soldier(Ant):
                     self.role = Role.SEARCH
                     self.action()
                     return True
-            else :
+            else:
                 self.role = Role.SEARCH
                 self.action()
                 return True
@@ -87,9 +85,8 @@ class Soldier(Ant):
             if self.element in self.home.entrance:
                 self.role = Role.REST
 
-                if self.has_space() != 0 :
+                if self.has_space() != 0:
                     if not self.consume_base():
-
                         self.role = Role.SEARCH
                         self.action()
                         return True
@@ -103,7 +100,6 @@ class Soldier(Ant):
                 self.chose_path()
                 return True
         return False
-
 
     def post(self):
 
@@ -119,4 +115,5 @@ class Soldier(Ant):
             print("Age: ", self.age[0], "out of", self.age[1])
             if self.is_travelling > 0: print("is travelling for ", self.is_travelling, "turns")
 
-        else: print("is dead")
+        else:
+            print("is dead")

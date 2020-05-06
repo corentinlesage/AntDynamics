@@ -1,7 +1,5 @@
-from Path import Path
-from Position import Position
-from Pheromone import Pheromone
-from Animal import Animal
+from Programme.Position import Position
+from Programme.Pheromone import Pheromone
 
 
 class Element:
@@ -32,17 +30,25 @@ class Element:
         self.list_path.append(path)
 
     def remove_animal(self, animal):
-        if not animal.is_ant() and animal.home.entrance.contains(self):
+
+        if not animal.is_ant():
             self.capacity[0] -= animal.get_size()
+        else:
+            if animal in animal.home.list_ant_at_home:
+                animal.remove_from_home()
 
         self.list_animal.remove(animal)
 
     def add_animal(self, animal):
-        if not animal.is_ant() and animal.home.entrance.contains(self):
+
+        if not animal.is_ant():
             temp = animal.get_size()
             if temp > self.capacity[1] - self.capacity[0]:
                 return False
             self.capacity[0] += temp
+
+        elif animal in animal.home.list_ant_at_home:
+            animal.add_from_home()
 
         self.list_animal.append(animal)
 
@@ -59,7 +65,7 @@ class Element:
 
     def is_supply(self):
         for i in self.list_supply:
-                return i
+            return i
 
         return None
 
@@ -76,6 +82,16 @@ class Element:
         return self.position.distance(element.position)
 
     def post(self):
+
         print("\nelement:")
         self.position.post()
         self.pheromone.post()
+
+        print("nombre d'animaux: ", len(self.list_animal))
+        print("nombre de tas: ", len(self.list_supply))
+
+        temp = 0
+        for i in self.list_path:
+            temp += i.capacity[0]
+
+        print("taille total d'animaux en trajets: ", temp)

@@ -1,33 +1,31 @@
-import Element
-import Ant
-from Queen import Queen
-from Soldier import Soldier
-from Worker import Worker
+from Programme.Queen import Queen
+from Programme.Soldier import Soldier
+from Programme.Worker import Worker
 
 
 class Anthill:
     name = None
     entrance = list()
+    list_ant_at_home = list()
     colony = list()
     storage = list()
 
     def __init__(self, name, entrance):
         self.name = name
 
+        self.list_ant_at_home = list()
+
         self.entrance = list()
         self.entrance = entrance
 
         self.colony = list()
-        # self.colony.append(Queen(self, entrance[0]))
-        self.colony.append(Soldier(self, entrance[0]))
-        self.colony.append(Worker(self, entrance[0], 10))
+        self.colony.append(Queen(self, entrance[0]))
+        # self.colony.append(Soldier(self, entrance[0]))
+        # self.colony.append(Worker(self, entrance[0], 10))
 
         self.storage = list()
-        self.storage.append(0)
-        self.storage.append(0)
-
-        for c in self.colony:
-            entrance[0].add_animal(c)
+        self.storage.append(100)
+        self.storage.append(100)
 
     def refill(self, type):
 
@@ -46,8 +44,8 @@ class Anthill:
 
         print("Anthill:  ", self.name)
 
-
         print("Entrances: ", len(self.entrance))
         print("Ants: ", len(self.colony))
+        print("Ants at home: ", len(self.list_ant_at_home))
         print("Supply: ")
         print("Food: ", self.storage[0], "Water: ", self.storage[1])

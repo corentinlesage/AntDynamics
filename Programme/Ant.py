@@ -1,5 +1,5 @@
 import sys
-from Animal import Animal
+from Programme.Animal import Animal
 
 
 class Ant(Animal):
@@ -8,18 +8,21 @@ class Ant(Animal):
     role = None
 
     def __init__(self, element, maxlife, size, damage, maxhunger, maxthirst, anthill, lifespan):
-        Animal.__init__(self, element, maxlife, size, damage, maxhunger, maxthirst)
         self.home = anthill
+        Animal.__init__(self, element, maxlife, size, damage, maxhunger, maxthirst)
 
         self.age = list()
         self.age.append(0)
         self.age.append(lifespan)
 
-    def __delete__(self, instance):
+        anthill.list_ant_at_home.append(self)
+
+    def __delete__(self):
 
         self.home.colony.remove(self)
+        self.home.list_ant_at_home.remove(self)
 
-        super(Animal, self).__delete__()
+        super().__delete__()
 
     def alive(self):
 
@@ -81,11 +84,10 @@ class Ant(Animal):
 
     def need_refill(self, coef):
         if self.hunger[0] < self.hunger[1] - coef:
-            return -1
-        if self.thirst[0] < self.thirst[1] - coef:
             return 1
+        if self.thirst[0] < self.thirst[1] - coef:
+            return -1
         return 0
-
 
     def consume_base(self):
         ind = -1
@@ -116,3 +118,9 @@ class Ant(Animal):
 
     def post(self):
         pass
+
+    def remove_from_home(self):
+        self.home.list_ant_at_home.remove(self)
+
+    def add_from_home(self):
+        self.home.list_ant_at_home.append(self)

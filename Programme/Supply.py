@@ -1,7 +1,4 @@
-from abc import ABC, abstractmethod
-
-
-class Supply(ABC):
+class Supply:
     element = None
     quantity = None
     type = None  # food = 1, water = -1
@@ -9,13 +6,16 @@ class Supply(ABC):
     def __init__(self, element, quantity, type):
 
         self.element = element
+
+        if element is not None:
+            self.element.list_supply.append(self)
+
         self.quantity = quantity
         self.type = type
 
     def __delete__(self):
         if self.element is not None:
             self.element.list_supply.remove(self)
-
 
     def decomposition(self):
         if self.type == 1:
@@ -32,6 +32,7 @@ class Supply(ABC):
 
         if self.type == -1:
             temp = "Water"
-        else: temp = "Food"
+        else:
+            temp = "Food"
 
         print(temp, ":  ", self.quantity)

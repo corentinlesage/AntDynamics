@@ -1,6 +1,8 @@
+import json
 import time
 
-from Environment import Environment
+from Programme.Environment import Environment
+from Programme.generationJson import serialiseur_perso
 
 
 def main():
@@ -27,9 +29,9 @@ def main():
 
     n = 1
 
-    while n <= 20:
+    while n <= 100:
 
-        print ("\nTurn number", n)
+        print("\nTurn number", n)
 
         temp_list_animal = list()
 
@@ -54,17 +56,15 @@ def main():
                             j.action()
 
         n = n + 1
-        #time.sleep(6)
+        # time.sleep(6)
 
     for i in environment.list_element:
-        i.post()
-        print("nombre d'animaux: ", len(i.list_animal))
-        print("nombre de tas: ", len(i.list_supply))
 
-        temp = 0
-        for j in i.list_path:
-            temp += j.capacity[0]
+        if len(i.list_supply) == 0 and len(i.list_animal) == 0:
+            pass
 
-        print("taille total d'animaux en trajets: ", temp)
+        else:
+            i.post()
+
 
 main()
