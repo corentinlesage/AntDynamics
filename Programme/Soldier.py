@@ -37,8 +37,8 @@ class Soldier(Ant):
         if not self.is_alive():
             self.convert_to_food()
 
-        if self.need_rest() != 0:
-            self.role == Role.REST
+        if self.need_rest() != 0 and self.role != Role.ATTACK:
+            self.role = Role.REST
 
         if self.role == Role.SEARCH:
             supply = self.element.is_supply()

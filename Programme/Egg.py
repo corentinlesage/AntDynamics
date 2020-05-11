@@ -19,6 +19,9 @@ class Egg(Ant):
 
     def action(self):
 
+        if not self.is_alive():
+            self.convert_to_food()
+
         if self.age[0] % self.hatch == 0:
             self.hatches()
             return True

@@ -1,12 +1,8 @@
 from abc import ABC, abstractmethod
 import random
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> f7b05eea38c93b6a9724657e157c75a8741935f5
 from Programme.Supply import Supply
+from Programme.Role import Role
 
 
 class Animal(ABC):
@@ -54,6 +50,10 @@ class Animal(ABC):
 
     def receive_damage(self, damage):
         self.life[0] -= damage
+
+        if self.is_ant():
+            if self.role != Role.Search or self.role == Role.REST:
+                self.role = Role.FLEE
 
     def attack(self, enemy):
         enemy.receive_damage(self.damage)

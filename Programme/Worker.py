@@ -30,8 +30,11 @@ class Worker(Ant):
 
     def action(self):
 
-        if self.need_rest() != 0:
-            self.role == Role.REST
+        if not self.is_alive():
+            self.convert_to_food()
+
+        if self.need_rest() != 0 and self.role != Role.HARVEST:
+            self.role = Role.REST
 
         if self.role == Role.SEARCH:
             supply = self.element.is_supply()
@@ -46,7 +49,7 @@ class Worker(Ant):
 
             enemy = self.element.is_enemy(self.home)
             if enemy is not None:
-                self.role == Role.FLEE
+                self.role = Role.FLEE
 
             else:
                 self.chose_path()

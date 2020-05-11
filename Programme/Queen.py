@@ -1,9 +1,6 @@
 from Programme.Ant import Ant
 from Programme.Role import Role
-<<<<<<< HEAD
 from Programme.Egg import Egg
-=======
->>>>>>> f7b05eea38c93b6a9724657e157c75a8741935f5
 
 
 class Queen(Ant):
@@ -18,6 +15,9 @@ class Queen(Ant):
         return False
 
     def action(self):
+
+        if not self.is_alive():
+            self.convert_to_food()
 
         if self.age[0] % self.lay_rate == 0:
             self.lay_egg()
