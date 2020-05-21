@@ -118,4 +118,4 @@ def generationListeEntier(liste):
     generate = ""
     for elem in liste:
         generate +=  str(elem) + " , "
-    return generate
+    return generate[::3]
