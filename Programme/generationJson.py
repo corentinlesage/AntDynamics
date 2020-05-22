@@ -80,6 +80,7 @@ def serialiseur_perso(obj):
 
     if isinstance(obj, Animal):
         return {"__class__": "Animal",
+                "id": obj.id,
                 #"element": obj.element,
                 "life": obj.life[0],
                 "life_max:": obj.life[1],
@@ -101,6 +102,7 @@ def serialiseur_perso(obj):
 
     if isinstance(obj, Element):
         return {"__class__": "Element",
+                "id": obj.id,
                 "radius": obj.radius,
                 "capacity": obj.capacity[0],
                 "capacity_max": obj.capacity[1],
@@ -118,6 +120,7 @@ def serialiseur_perso(obj):
 
     if isinstance(obj, Path):
         return {"__class__": "Path",
+                "id": obj.id,
                 # "start": serialiseur_perso(obj.start),
                 # "end": serialiseur_perso(obj.end),
                 "cost": obj.cost,
