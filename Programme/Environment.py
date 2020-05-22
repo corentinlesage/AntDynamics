@@ -33,3 +33,10 @@ class Environment:
 
     def add_supply(self, element, quantity, type):
         Supply(self.list_element[element], quantity, type)
+
+    def is_entrance(self, element):
+        for i in self.list_anthill:
+            if element in i.entrance:
+                return i
+
+        return None

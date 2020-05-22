@@ -6,6 +6,8 @@ from Programme.Role import Role
 
 
 class Animal(ABC):
+    ID = 0
+    id = None
     element = None
     path = None
     life = list()
@@ -16,6 +18,9 @@ class Animal(ABC):
     is_travelling = None
 
     def __init__(self, element, life, size, damage, hunger, thirst):
+        self.id = Animal.ID
+        Animal.ID += 1
+
         self.element = element
         self.path = None
         self.life = list()

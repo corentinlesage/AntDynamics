@@ -2,12 +2,14 @@ import json
 import time
 
 from Programme.Environment import Environment
+from Programme.Event import Event
 from Programme.generationJson import serialiseur_perso
 
 
 def main():
     print('Test 1 Create a basic environment to make an ant travel between 2 elements')
     environment = Environment()
+    data = list()
 
     environment.add_element(1, 5, 0, 0)
     environment.add_element(3, 3, 4, -3)
@@ -27,6 +29,8 @@ def main():
 
     environment.add_anthill("Home", [0])
 
+    event = Event(environment, 30, 20)
+
     n = 1
 
     while n <= 100:
@@ -36,6 +40,8 @@ def main():
         temp_list_animal = list()
 
         environment.list_anthill[0].post()
+
+        data.append(environment)
 
         for i in environment.list_element:
 
@@ -66,5 +72,7 @@ def main():
         else:
             i.post()
 
+    with open('Test.json', 'w', encoding='utf-8') as f:
+        json.dump(data, f, indent=4, default=serialiseur_perso)
 
 main()

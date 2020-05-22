@@ -47,6 +47,7 @@ class Egg(Ant):
         print("egg ant from the colony ", self.home.name)
 
         if self.is_alive():
+            print("id: ", self.id)
             print("size: ", self.size)
             print("State: ", self.role)
             print("Life: ", self.life[0], "out of", self.life[1])
