@@ -1,4 +1,6 @@
 class Path:
+    ID = 0
+    id = None
     start = None
     end = None
 
@@ -6,6 +8,10 @@ class Path:
     capacity = list()
 
     def __init__(self, start, end, cost, max_capacity):
+
+        self.id = Path.ID
+        Path.ID += 1
+
         self.start = start
         self.end = end
         self.cost = cost

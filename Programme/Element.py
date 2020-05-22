@@ -3,6 +3,8 @@ from Programme.Pheromone import Pheromone
 
 
 class Element:
+    ID = 0
+    id = None
     radius = None
     capacity = list()
 
@@ -13,6 +15,9 @@ class Element:
     list_supply = list()
 
     def __init__(self, radius, capacity, x, y):
+        self.id = Element.ID
+        Element.ID += 1
+
         self.radius = radius
 
         self.capacity = list()
@@ -84,6 +89,7 @@ class Element:
     def post(self):
 
         print("\nelement:")
+        print("id: ", self.id)
         self.position.post()
         self.pheromone.post()
 
