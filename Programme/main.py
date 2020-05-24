@@ -74,7 +74,7 @@ def main():
         else:
             i.post()
 
-    with open('Test.json', 'w', encoding='utf-8') as f:
+    with open('Data.json', 'w', encoding='utf-8') as f:
         json.dump(data, f, indent=4, default=serialiseur_perso)
 
 

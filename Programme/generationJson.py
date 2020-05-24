@@ -20,8 +20,10 @@ class test():
     def __init__(self):
         return
 
-
-
+"""
+    function which transform the objects in json object 
+    to send data to front-end
+"""
 
 def serialiseur_perso(obj):
     # parent class are always under child class in this function
@@ -71,7 +73,7 @@ def serialiseur_perso(obj):
         obj_cpy = copy.copy(obj)
         obj_cpy.__class__ = Animal
         return {"__class__": "Ant",
-                #"home": obj.home,
+                "home": obj.home.name,
                 "age": obj.age[0],
                 "age_max": obj.age[1],
                 "role": str(obj.role),
@@ -121,8 +123,8 @@ def serialiseur_perso(obj):
     if isinstance(obj, Path):
         return {"__class__": "Path",
                 "id": obj.id,
-                # "start": serialiseur_perso(obj.start),
-                # "end": serialiseur_perso(obj.end),
+                "start": obj.start.id,
+                "end": obj.end.id,
                 "cost": obj.cost,
                 "capacity": obj.capacity[0],
                 "capacity_max": obj.capacity[1],
@@ -148,14 +150,18 @@ def serialiseur_perso(obj):
 
     raise TypeError(repr(obj) + " n'est pas sérialisable !")
 
-
+"""
+    function which transform a list of object to a json list of object
+"""
 def generationListe(liste):
     generate = list()
     for elem in liste:
         generate.append(serialiseur_perso(elem))
     return generate
 
-
+"""
+    function which transform a list of int to a string 
+"""
 def generationListeEntier(liste):
     generate = ""
     for elem in liste:
