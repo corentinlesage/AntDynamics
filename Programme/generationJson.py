@@ -81,18 +81,35 @@ def serialiseur_perso(obj):
                 }
 
     if isinstance(obj, Animal):
-        return {"__class__": "Animal",
-                "id": obj.id,
-                #"element": obj.element,
-                "life": obj.life[0],
-                "life_max:": obj.life[1],
-                "size": obj.size,
-                "damage": obj.damage,
-                "hunger": obj.hunger[0],
-                "hunger_max": obj.hunger[1],
-                "thirst": obj.thirst[0],
-                "thirst_max": obj.thirst[1],
-                "is_travelling": obj.is_travelling}
+        if obj.is_travelling > 0:
+            return {"__class__": "Animal",
+                    "id": obj.id,
+                    #"element": obj.element,
+                    "life": obj.life[0],
+                    "life_max": obj.life[1],
+                    "size": obj.size,
+                    "damage": obj.damage,
+                    "hunger": obj.hunger[0],
+                    "hunger_max": obj.hunger[1],
+                    "thirst": obj.thirst[0],
+                    "thirst_max": obj.thirst[1],
+                    "is_travelling": obj.is_travelling,
+                    "destination": obj.path.get_end().id
+                    }
+        else:
+            return {"__class__": "Animal",
+                    "id": obj.id,
+                    #"element": obj.element,
+                    "life": obj.life[0],
+                    "life_max": obj.life[1],
+                    "size": obj.size,
+                    "damage": obj.damage,
+                    "hunger": obj.hunger[0],
+                    "hunger_max": obj.hunger[1],
+                    "thirst": obj.thirst[0],
+                    "thirst_max": obj.thirst[1],
+                    "is_travelling": obj.is_travelling,
+                    }
 
     if isinstance(obj, Anthill):
         return {"__class__": "Anthill",
