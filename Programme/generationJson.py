@@ -1,6 +1,7 @@
 from Programme.Animal import Animal
 from Programme.Ant import Ant
 from Programme.Anthill import Anthill
+from Programme.Egg import Egg
 from Programme.Element import Element
 from Programme.Environment import Environment
 from Programme.Path import Path
@@ -13,13 +14,16 @@ from Programme.Supply import Supply
 
 
 import copy
+import json
 
 class test():
     def __init__(self):
         return
 
-
-
+"""
+    function which transform the objects in json object 
+    to send data to front-end
+"""
 
 def serialiseur_perso(obj):
     # parent class are always under child class in this function
@@ -27,34 +31,85 @@ def serialiseur_perso(obj):
     if isinstance(obj, Queen):
         obj_cpy = copy.copy(obj)
         obj_cpy.__class__ = Ant
+        return {"__class__": "Queen",
+                "lay_rate": obj.lay_rate,
+                "__parent__": serialiseur_perso(obj_cpy)
+                }
+
 
     if isinstance(obj, Soldier):
         obj_cpy = copy.copy(obj)
         obj_cpy.__class__ = Ant
+        return {"__class__": "Soldier",
+                "__parent__": serialiseur_perso(obj_cpy)
+                }
+
+    if isinstance(obj, Egg):
+        obj_cpy = copy.copy(obj)
+        obj_cpy.__class__ = Ant
+        return {"__class__": "Egg",
+                "hatch": obj.hatch,
+                "__parent__": serialiseur_perso(obj_cpy)
+                }
 
     if isinstance(obj, Worker):
         obj_cpy = copy.copy(obj)
         obj_cpy.__class__ = Ant
+        if (obj.supply[0] == None) :
+            return {"__class__": "Worker",
+                    "supply_capacity": obj.supply[1],
+                    "supply": "nothing",
+                    "__parent__": serialiseur_perso(obj_cpy)
+                    }
+        else:
+            return {"__class__": "Worker",
+                    "supply_capacity": obj.supply[1],
+                    "supply": serialiseur_perso(obj.supply[0]),
+                    "__parent__": serialiseur_perso(obj_cpy)
+                    }
+
 
     if isinstance(obj, Ant):
         obj_cpy = copy.copy(obj)
         obj_cpy.__class__ = Animal
         return {"__class__": "Ant",
-                #"home": obj.home,
-                "age": generationListeEntier(obj.age),
+                "home": obj.home.name,
+                "age": obj.age[0],
+                "age_max": obj.age[1],
                 "role": str(obj.role),
                 "__parent__": serialiseur_perso(obj_cpy)
                 }
 
     if isinstance(obj, Animal):
-        return {"__class__": "Animal",
-                #"element": obj.element,
-                "life": generationListeEntier(obj.life),
-                "size": str(obj.size),
-                "damage": str(obj.damage),
-                "hunger": generationListeEntier(obj.hunger),
-                "thirst": generationListeEntier(obj.thirst),
-                "is_travelling": str(obj.is_travelling)}
+        if obj.is_travelling > 0:
+            return {"__class__": "Animal",
+                    "id": obj.id,
+                    #"element": obj.element,
+                    "life": obj.life[0],
+                    "life_max": obj.life[1],
+                    "size": obj.size,
+                    "damage": obj.damage,
+                    "hunger": obj.hunger[0],
+                    "hunger_max": obj.hunger[1],
+                    "thirst": obj.thirst[0],
+                    "thirst_max": obj.thirst[1],
+                    "is_travelling": obj.is_travelling,
+                    "destination": obj.path.get_end().id
+                    }
+        else:
+            return {"__class__": "Animal",
+                    "id": obj.id,
+                    #"element": obj.element,
+                    "life": obj.life[0],
+                    "life_max": obj.life[1],
+                    "size": obj.size,
+                    "damage": obj.damage,
+                    "hunger": obj.hunger[0],
+                    "hunger_max": obj.hunger[1],
+                    "thirst": obj.thirst[0],
+                    "thirst_max": obj.thirst[1],
+                    "is_travelling": obj.is_travelling,
+                    }
 
     if isinstance(obj, Anthill):
         return {"__class__": "Anthill",
@@ -66,8 +121,10 @@ def serialiseur_perso(obj):
 
     if isinstance(obj, Element):
         return {"__class__": "Element",
+                "id": obj.id,
                 "radius": obj.radius,
-                "capacity": generationListeEntier(obj.capacity),
+                "capacity": obj.capacity[0],
+                "capacity_max": obj.capacity[1],
                 "position": serialiseur_perso(obj.position),
                 "pheromone": serialiseur_perso(obj.pheromone),
                 "list_animal": generationListe(obj.list_animal),
@@ -82,15 +139,19 @@ def serialiseur_perso(obj):
 
     if isinstance(obj, Path):
         return {"__class__": "Path",
-                # "start": serialiseur_perso(obj.start),
-                # "end": serialiseur_perso(obj.end),
+                "id": obj.id,
+                "start": obj.start.id,
+                "end": obj.end.id,
                 "cost": obj.cost,
-                "capacity": generationListeEntier(obj.capacity)
+                "capacity": obj.capacity[0],
+                "capacity_max": obj.capacity[1],
                 }
 
     if isinstance(obj, Pheromone):
         return {"__class__": "Pheromone",
-                "pheromone": generationListeEntier(obj.pheromone)
+                "pheromone_danger": obj.pheromone[0],
+                "pheromone_food": obj.pheromone[1],
+                "pheromone_recruit": obj.pheromone[2]
                 }
 
     if isinstance(obj, Position):
@@ -106,16 +167,20 @@ def serialiseur_perso(obj):
 
     raise TypeError(repr(obj) + " n'est pas sérialisable !")
 
-
+"""
+    function which transform a list of object to a json list of object
+"""
 def generationListe(liste):
-    generate = "["
+    generate = list()
     for elem in liste:
-        generate += "{ "+ str(serialiseur_perso(elem)) +" }"
-    return generate + "]"
+        generate.append(serialiseur_perso(elem))
+    return generate
 
-
+"""
+    function which transform a list of int to a string 
+"""
 def generationListeEntier(liste):
     generate = ""
     for elem in liste:
-        generate +=  str(elem) + " , "
-    return generate[::3]
+        generate += str(elem) + " , "
+    return generate.strip(" , ")

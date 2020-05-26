@@ -9,7 +9,13 @@ from Programme.generationJson import serialiseur_perso
 def main():
     print('Test 1 Create a basic environment')
     environment = Environment()
+<<<<<<< HEAD
     data = list()
+=======
+
+    data = list()
+
+>>>>>>> a568f3ac2e753fbcf33cbd0a65df5a5d9cf03937
 
     environment.add_element(1, 10, 10, 10)
     environment.add_element(3, 7, 12, 12)
@@ -79,7 +85,11 @@ def main():
         else:
             i.post()
 
-    with open('Test.json', 'w', encoding='utf-8') as f:
+    with open('Data.json', 'w', encoding='utf-8') as f:
         json.dump(data, f, indent=4, default=serialiseur_perso)
+<<<<<<< HEAD
+=======
+
+>>>>>>> a568f3ac2e753fbcf33cbd0a65df5a5d9cf03937
 
 main()
