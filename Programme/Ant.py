@@ -3,11 +3,21 @@ from Programme.Animal import Animal
 
 
 class Ant(Animal):
+    """
+    Ant is an Animal
+
+    home : Anthill
+    age : list of 2 positives integers
+    1. actual age
+    2. max age
+    """
     home = None
     age = list()
-    role = None
 
     def __init__(self, element, maxlife, size, damage, maxhunger, maxthirst, anthill, lifespan):
+        """
+        Constructor
+        """
         self.home = anthill
         Animal.__init__(self, element, maxlife, size, damage, maxhunger, maxthirst)
 
@@ -18,14 +28,24 @@ class Ant(Animal):
         anthill.list_ant_at_home.append(self)
 
     def __delete__(self):
+        """
+        Destructor
 
+        Remove Ant from its Anthill
+        """
         self.home.colony.remove(self)
         self.home.list_ant_at_home.remove(self)
 
         super().__delete__()
 
     def alive(self):
+        """
+        As Animal, verify if Ant is still alive with age
+        update the values
 
+        Return True if the conditions are met
+        else False
+        """
         if self.life[0] <= 0: return False
 
         if self.hunger[0] > 0:
@@ -46,9 +66,15 @@ class Ant(Animal):
         return True
 
     def is_alive(self):
+        """
+        Check if Animal is alive without updating its stats and with age
+        """
         return self.life[0] > 0 and self.hunger[0] > 0 and self.thirst[0] > 0 and self.age[0] < self.age[1]
 
     def receive_damage(self, damage):
+        """
+        Receive damage by emiting the danger pheromone
+        """
         self.life[0] -= damage
 
         if self.life[0] <= 0:
@@ -57,12 +83,27 @@ class Ant(Animal):
             self.emit_pheromone(0, 0.15)
 
     def move_to_element(self, element, path):
+        """
+        Depending of the Ant IA choose if the Element is a valid travel
+
+        element : Element
+        Return True if the Element is valid
+        else False
+        """
         pass
 
     def action(self):
+        """
+        Depending of the Ant IA interact on the Element
+        """
         pass
 
     def find_home_entrance(self):
+        """
+        Allow an Ant to find the closest Path to his Anthill by returning the closest Element to it
+
+        Return : Element
+        """
         mini = sys.float_info.max
         element = None
         for i in self.home.entrance:
@@ -74,22 +115,20 @@ class Ant(Animal):
         return element
 
     def emit_pheromone(self, p, quantity):
+        """
+        Allow an Ant to emit pheromone depending of its type p and quantity
+
+        p : number 0, 1 or 2
+        quantity : real number between 0 and 1
+        """
         self.element.get_pheromone().add_pheromone(p, quantity)
 
-    def has_space(self):
-        return self.need_refill(10)
-
-    def need_rest(self):
-        return self.need_refill(80)
-
-    def need_refill(self, coef):
-        if self.hunger[0] < self.hunger[1] - coef:
-            return 1
-        if self.thirst[0] < self.thirst[1] - coef:
-            return -1
-        return 0
-
     def consume_base(self):
+        """
+        Allow an Ant to eat and drink directly in his Anthill storage
+        return True if the action succeeded
+        else False
+        """
         ind = -1
 
         if self.hunger[0] < self.hunger[1] - 10:
@@ -117,6 +156,9 @@ class Ant(Animal):
         return True
 
     def post(self):
+        """
+        Print of an Ant
+        """
         pass
 
     def remove_from_home(self):

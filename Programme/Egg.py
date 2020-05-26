@@ -6,19 +6,39 @@ from Programme.Worker import Worker
 
 
 class Egg(Ant):
+    """
+    Egg is an Ant
+    It eat and drink until it hatches into a proper Ant: Soldier or Worker
+
+    hatch: positive integer
+    role is not used and by default is put on Passive
+    """
     hatch = None
 
     def __init__(self, anthill, element):
+        """
+        Constructor
+        """
         Ant.__init__(self, element, 10, 1, 0, 50, 50, anthill, 20)
 
         self.role = Role.PASSIVE
         self.hatch = 15
 
     def move_to_element(self, element):
+        """
+        Here an Egg doesnt move away from Anthill
+        Doesn't have a IA for movement
+        """
         return False
 
     def action(self):
+        """
+        Egg will periodically eat and drink in the Anthill
+        Until it grows enough to hatch
 
+        Return True if an action was successful
+        else False
+        """
         if not self.is_alive():
             self.convert_to_food()
 
@@ -32,7 +52,9 @@ class Egg(Ant):
         return False
 
     def hatches(self):
-
+        """
+        Convert an Egg into another Ant : Soldier or Worker
+        """
         temp = random.random()
         if temp < 0.3:
             self.home.colony.append(Soldier(self.home, self.element))
@@ -42,7 +64,9 @@ class Egg(Ant):
         self.__delete__()
 
     def post(self):
-
+        """
+        Print of an Egg
+        """
         self.element.post()
         print("egg ant from the colony ", self.home.name)
 

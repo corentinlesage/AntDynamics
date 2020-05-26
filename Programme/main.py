@@ -7,26 +7,27 @@ from Programme.generationJson import serialiseur_perso
 
 
 def main():
-    print('Test 1 Create a basic environment to make an ant travel between 2 elements')
+    print('Test 1 Create a basic environment')
     environment = Environment()
-<<<<<<< HEAD
     data = list()
-=======
-    data= list()
->>>>>>> 2ab0aad24cbe9637fa1aa2b4dbc0ec120ff02653
 
-    environment.add_element(1, 5, 0, 0)
-    environment.add_element(3, 3, 4, -3)
-    environment.add_element(1, 4, -5, 4)
+    environment.add_element(1, 10, 10, 10)
+    environment.add_element(3, 7, 12, 12)
+    environment.add_element(1, 16, 9, 7)
 
-    environment.add_element(3, 7, 3, -4)
-    environment.add_element(3, 4, -4, 7)
+    environment.add_element(3, 11, 8, 12)
+    environment.add_element(3, 5, 5, 8)
 
-    environment.add_path(0, 1, 1, 4)
-    environment.add_path(0, 2, 2, 4)
+    environment.add_element(1, 15, 7, 10)
 
-    environment.add_path(1, 3, 1, 4)
-    environment.add_path(2, 4, 2, 3)
+    environment.add_path(0, 1, 3, 8)
+    environment.add_path(0, 2, 2, 12)
+
+    environment.add_path(1, 3, 1, 9)
+    environment.add_path(2, 4, 2, 7)
+
+    environment.add_path(4, 5, 2, 10)
+    environment.add_path(3, 5, 1, 15)
 
     environment.add_supply(3, 1000, -1)
     environment.add_supply(4, 1000, 1)
@@ -40,6 +41,8 @@ def main():
     while n <= 100:
 
         print("\nTurn number", n)
+
+        #event.launch()
 
         temp_list_animal = list()
 
@@ -78,9 +81,5 @@ def main():
 
     with open('Test.json', 'w', encoding='utf-8') as f:
         json.dump(data, f, indent=4, default=serialiseur_perso)
-<<<<<<< HEAD
-=======
-
->>>>>>> 2ab0aad24cbe9637fa1aa2b4dbc0ec120ff02653
 
 main()

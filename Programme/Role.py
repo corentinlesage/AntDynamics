@@ -2,6 +2,9 @@ from enum import Enum
 
 
 class Role(Enum):
+    """
+    State that can take Animal
+    """
     PASSIVE = 1
     SEARCH = 2
     FLEE = 3

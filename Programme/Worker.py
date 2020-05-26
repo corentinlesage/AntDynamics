@@ -4,9 +4,20 @@ from Programme.Supply import Supply
 
 
 class Worker(Ant):
+    """
+    Worker is an Ant
+    It wonder of the Environment to look for Supply to store in his Anthill
+
+    supply : List
+    1. Supply or None if empty
+    2. max_storage : positive integer
+    """
     supply = list()
 
     def __init__(self, anthill, element, max_storage):
+        """
+        Constructor
+        """
         Ant.__init__(self, element, 100, 1, 0, 100, 100, anthill, 500)
         self.role = Role.SEARCH
 
@@ -14,8 +25,24 @@ class Worker(Ant):
         self.supply.append(None)
         self.supply.append(max_storage)
 
-    def move_to_element(self, element):
+    def __delete__(self):
+        """
+        Destructor
 
+        The Supply carried by the Worker is put on the Element of the Worker death
+        """
+        if self.supply is not None:
+            self.element.add_supply(self.supply[0])
+        super().__delete__()
+
+    def move_to_element(self, element):
+        """
+        Worker try to wonder of the Environment to look for Supply in the Role : Search
+
+        element : Element
+        Return True if the Element is valid
+        else False
+        """
         pheromone = element.get_pheromone()
 
         if self.role == Role.SEARCH:
@@ -29,7 +56,27 @@ class Worker(Ant):
             return self.element.distance(temp) >= element.distance(temp) and (not pheromone.is_detected(0))
 
     def action(self):
+        """"
+        role : Role
+        Search : look around on the Environment to look for Supply
+        If Supply detected, emit food pass to Harvest
+        If hurt emit a danger Pheromone
+        If danger pheromone is detected pass to Flee
+        If hungry or thirsty, pass to Rest
 
+        Flee : Reach safety to the colony as quickly as possible
+        pass to Search if no more danger Pheromone is detected
+
+        Rest : Reach the colony to eat and drink then pass to Search
+
+        Harvest : When a Supply is detected or the food Pheromone is detected
+        harvest the supply and go to its Anthill to store it
+        will also distribute the food to other Ant of the same Anthill on the way
+        then pass to Search
+
+        Return True if an action was successful
+        else False
+        """
         if not self.is_alive():
             self.convert_to_food()
 
@@ -92,7 +139,11 @@ class Worker(Ant):
         return False
 
     def load(self, supply):
+        """
+        Worker in Harvest load Supply for transport
 
+        supply : Supply
+        """
         quantity = 0
 
         if supply.quantity > self.supply[1]:
@@ -106,7 +157,9 @@ class Worker(Ant):
         self.supply[0] = Supply(None, quantity, supply.type)
 
     def distribute(self):
-
+        """
+        Worker in Harvest distribute the Supply to other Ant in need if encountered
+        """
         for i in self.element.list_animal:
             if i.is_ant():
                 if i.home == self.home and i != self:
@@ -135,7 +188,9 @@ class Worker(Ant):
         return False
 
     def store(self):
-
+        """
+        Worker in Harvest depose the Supply in the store of their Anthill
+        """
         ind = None
 
         if self.supply[0].type == 1:
@@ -149,7 +204,9 @@ class Worker(Ant):
         self.supply[0] = None
 
     def post(self):
-
+        """
+        Print of a Worker
+        """
         self.element.post()
         print("worker ant from the colony ", self.home.name)
 

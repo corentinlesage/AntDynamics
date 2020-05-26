@@ -4,18 +4,37 @@ from Programme.Egg import Egg
 
 
 class Queen(Ant):
+    """
+    Queen is an Ant
+    It periodically lay eggs over a turn period
+
+    lay_rate : positive integer
+    role is not used and by default is put on Passive
+    """
     lay_rate = None
 
     def __init__(self, anthill, element):
+        """
+        Constructor
+        """
         Ant.__init__(self, element, 10, 4, 1, 30, 30, anthill, 1000)
         self.lay_rate = 20
         self.role = Role.PASSIVE
 
     def move_to_element(self, element):
+        """
+        Queen doesnt move away from Anthill
+        Doesn't have a IA for movement
+        """
         return False
 
     def action(self):
+        """
+        Queen will periodically lay eggs and eat and drink in the Anthill
 
+        Return True if an action was successful
+        else False
+        """
         if not self.is_alive():
             self.convert_to_food()
 
@@ -32,7 +51,9 @@ class Queen(Ant):
         self.home.colony.append(Egg(self.home, self.element))
 
     def post(self):
-
+        """
+        Print of a Queen
+        """
         self.element.post()
         print("Queen ant from the colony ", self.home.name)
 
