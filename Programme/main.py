@@ -1,5 +1,5 @@
 import json
-import time
+import copy
 
 from Programme.Environment import Environment
 from Programme.Event import Event
@@ -50,7 +50,7 @@ def main():
 
         environment.list_anthill[0].post()
 
-        data.append(environment)
+        data.append(copy.deepcopy(environment))
 
         for i in environment.list_element:
 
@@ -69,6 +69,7 @@ def main():
                     if j.alive():
                         if not j.travelling():
                             j.action()
+
 
         n = n + 1
         # time.sleep(6)
