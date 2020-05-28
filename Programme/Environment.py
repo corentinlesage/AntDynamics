@@ -14,6 +14,7 @@ class Environment:
     """
     list_element = list()
     list_anthill = list()
+    event = None
 
     def __init__(self):
         """
@@ -21,6 +22,7 @@ class Environment:
         """
         self.list_element = list()
         self.list_anthill = list()
+        self.event = None
 
     def add_element(self, radius, capacity, x, y):
         """
