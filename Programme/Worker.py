@@ -31,8 +31,9 @@ class Worker(Ant):
 
         The Supply carried by the Worker is put on the Element of the Worker death
         """
-        if self.supply is not None:
+        if self.supply[0] is not None:
             self.element.add_supply(self.supply[0])
+            self.supply[0].element = self.element
         super().__delete__()
 
     def move_to_element(self, element):
@@ -79,6 +80,7 @@ class Worker(Ant):
         """
         if not self.is_alive():
             self.convert_to_food()
+            return False
 
         if self.need_rest() != 0 and self.role != Role.HARVEST:
             self.role = Role.REST
@@ -145,6 +147,7 @@ class Worker(Ant):
         supply : Supply
         """
         quantity = 0
+        type = supply.type
 
         if supply.quantity > self.supply[1]:
             quantity = self.supply[1]
@@ -154,7 +157,7 @@ class Worker(Ant):
             quantity = supply.quantity
             del supply
 
-        self.supply[0] = Supply(None, quantity, supply.type)
+        self.supply[0] = Supply(None, quantity, type)
 
     def distribute(self):
         """

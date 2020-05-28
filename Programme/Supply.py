@@ -35,7 +35,7 @@ class Supply:
             self.quantity -= 0.01
 
             if self.quantity <= 0:
-                del self
+                self.__delete__()
 
     def post(self):
         """

@@ -34,7 +34,8 @@ class Ant(Animal):
         Remove Ant from its Anthill
         """
         self.home.colony.remove(self)
-        self.home.list_ant_at_home.remove(self)
+        if self in self.home.list_ant_at_home:
+            self.home.list_ant_at_home.remove(self)
 
         super().__delete__()
 

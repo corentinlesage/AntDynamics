@@ -34,6 +34,7 @@ class Predator(Animal):
         """
         if not self.is_alive():
             self.convert_to_food()
+            return False
 
         if self.role == Role.SEARCH:
             supply = self.element.is_supply()
@@ -90,7 +91,6 @@ class Predator(Animal):
             print("Life: ", self.life[0], "out of", self.life[1])
             print("Hunger: ", self.hunger[0], "out of", self.hunger[1])
             print("Thirst: ", self.thirst[0], "out of", self.thirst[1])
-            print("Age: ", self.age[0], "out of", self.age[1])
 
             if self.is_travelling > 0: print("is travelling for ", self.is_travelling, "turns")
 

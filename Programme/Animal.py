@@ -89,12 +89,12 @@ class Animal(ABC):
         if self.is_ant() and self.element in self.home.entrance:
             pass
         else:
-            self.element.capacity -= self.size
+            self.element.capacity[0] -= self.size
 
         self.element.list_animal.remove(self)
 
         if self.path is not None:
-            self.path.capacity[0] -= self.size
+            self.path.capacity[0] = self.path.capacity[0] - self.size
 
     def receive_damage(self, damage):
         """
@@ -223,7 +223,7 @@ class Animal(ABC):
                             self.element.remove_animal(self)
                             self.element = path.get_end()
 
-                            self.is_travelling = path.cost
+                            self.is_travelling = path.cost - 1
                             self.path = path
                             path.capacity[0] += self.size
                             return True
@@ -263,7 +263,7 @@ class Animal(ABC):
         """
         self.element.list_supply.append(Supply(self.element, self.size * 10, 1))
 
-        del self
+        self.__delete__()
 
     def consume(self, supply):
         """
@@ -281,9 +281,9 @@ class Animal(ABC):
             temp = supply.quantity
             del supply
 
-        if supply.type == -1:
+        if type == -1:
             self.thirst[0] += temp
-        elif supply.type == 1:
+        elif type == 1:
             self.hunger[0] += temp
 
     def get_size(self):

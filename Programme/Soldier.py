@@ -15,6 +15,8 @@ class Soldier(Ant):
         Ant.__init__(self, element, 80, 2, 3, 80, 80, anthill, 500)
         self.role = Role.SEARCH
 
+
+
     def move_to_element(self, element):
         """
         Soldier try to wonder of the Environment to look for intruders in Role : Search
@@ -69,6 +71,7 @@ class Soldier(Ant):
 
         if not self.is_alive():
             self.convert_to_food()
+            return False
 
         if self.need_rest() != 0 and self.role != Role.ATTACK:
             self.role = Role.REST

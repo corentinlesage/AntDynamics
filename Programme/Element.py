@@ -68,15 +68,22 @@ class Element:
         if the element is an anthill entrance, remove the animal from the anthill location
         Reduce the size taken by the animal in the element
         animal : Animal
+
+            return True if the remove was successful
+        else False
         """
-
-        if not animal.is_ant():
-            self.capacity[0] -= animal.get_size()
+        if animal in self.list_animal:
+            self.list_animal.remove(animal)
         else:
-            if animal in animal.home.list_ant_at_home:
-                animal.remove_from_home()
+            return False
 
-        self.list_animal.remove(animal)
+        if not animal.is_ant() or not (self in animal.home.entrance):
+            self.capacity[0] -= animal.get_size()
+
+        if animal.is_ant() and animal in animal.home.list_ant_at_home:
+            animal.remove_from_home()
+
+        return True
 
     def add_animal(self, animal):
         """
@@ -84,16 +91,16 @@ class Element:
         if the element is an anthill entrance, add the animal from the anthill location
         Increase the size taken by the animal in the element
         animal : Animal
-        return True if the add was succesfull
+        return True if the add was successful
         else False : not enough space in the element
         """
-        if not animal.is_ant():
+        if not animal.is_ant() or not (self in animal.home.entrance):
             temp = animal.get_size()
             if temp > self.capacity[1] - self.capacity[0]:
                 return False
             self.capacity[0] += temp
 
-        elif animal in animal.home.list_ant_at_home:
+        if animal.is_ant() and not (animal in animal.home.list_ant_at_home):
             animal.add_from_home()
 
         self.list_animal.append(animal)

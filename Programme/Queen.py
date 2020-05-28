@@ -18,7 +18,7 @@ class Queen(Ant):
         Constructor
         """
         Ant.__init__(self, element, 10, 4, 1, 30, 30, anthill, 1000)
-        self.lay_rate = 20
+        self.lay_rate = 15
         self.role = Role.PASSIVE
 
     def move_to_element(self, element):
@@ -37,6 +37,7 @@ class Queen(Ant):
         """
         if not self.is_alive():
             self.convert_to_food()
+            return False
 
         if self.age[0] % self.lay_rate == 0:
             self.lay_egg()

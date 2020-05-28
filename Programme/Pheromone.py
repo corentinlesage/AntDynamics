@@ -27,11 +27,11 @@ class Pheromone:
         """
         Decrease the pheromones each turn
         """
-        for i in self.pheromone:
-            if i > 0.05:
-                i -= 0.05
+        for i in range(0, 3):
+            if self.pheromone[i] > 0.02:
+                self.pheromone[i] -= 0.02
             else:
-                i = 0
+                self.pheromone[i] = 0
 
     def add_pheromone(self, p, quantity):
         """

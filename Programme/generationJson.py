@@ -94,7 +94,7 @@ def serialiseur_perso(obj):
                     "thirst": obj.thirst[0],
                     "thirst_max": obj.thirst[1],
                     "is_travelling": obj.is_travelling,
-                    "destination": obj.path.get_end().id
+                    "origin": obj.path.get_start().id
                     }
         else:
             return {"__class__": "Animal",

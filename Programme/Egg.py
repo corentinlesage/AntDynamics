@@ -22,7 +22,7 @@ class Egg(Ant):
         Ant.__init__(self, element, 10, 1, 0, 50, 50, anthill, 20)
 
         self.role = Role.PASSIVE
-        self.hatch = 15
+        self.hatch = 10
 
     def move_to_element(self, element):
         """
@@ -41,6 +41,7 @@ class Egg(Ant):
         """
         if not self.is_alive():
             self.convert_to_food()
+            return False
 
         if self.age[0] % self.hatch == 0:
             self.hatches()
