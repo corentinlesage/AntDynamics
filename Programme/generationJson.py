@@ -128,7 +128,8 @@ def serialiseur_perso(obj):
                 "position": serialiseur_perso(obj.position),
                 "pheromone": serialiseur_perso(obj.pheromone),
                 "list_animal": generationListe(obj.list_animal),
-                "list_path": generationListe(obj.list_path)
+                "list_path": generationListe(obj.list_path),
+                "list_supply": generationListe(obj.list_supply)
                 }
 
     if isinstance(obj, Environment):
