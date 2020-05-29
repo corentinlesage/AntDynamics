@@ -5,7 +5,6 @@ from Programme.Environment import Environment
 from Programme.Event import Event
 from Programme.generationJson import serialiseur_perso
 
-
 def main():
     print('Test 1 Create a basic environment')
     environment = Environment()
@@ -50,7 +49,7 @@ def main():
 
     n = 1
 
-    while n <= 150:#1000
+    while n <= 200:#1000
 
         print("\nTurn number", n)
 

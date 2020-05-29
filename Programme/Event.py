@@ -83,7 +83,7 @@ class Event:
         rand_element = random.randint(0, len(self.environment.list_element) - 1)
         element = self.environment.list_element[rand_element]
 
-        element.add_supply(Supply(element, 50, -1))
+        Supply(element, 50, -1)
 
         anthill = self.environment.is_entrance(element)
 
@@ -115,7 +115,7 @@ class Event:
             else:
                 anthill = False
 
-        element.add_supply(Supply(element, 50, 1))
+        Supply(element, 50, 1)
 
     def predator(self):
         """

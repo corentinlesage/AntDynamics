@@ -68,7 +68,6 @@ class Soldier(Ant):
         Return True if an action was successful
         else False
         """
-
         if not self.is_alive():
             self.convert_to_food()
             return False
@@ -121,14 +120,13 @@ class Soldier(Ant):
             if self.element in self.home.entrance:
                 self.role = Role.REST
 
-                if self.has_space() != 0:
-                    if not self.consume_base():
-                        self.role = Role.SEARCH
-                        self.action()
-                        return True
+                if not self.consume_base():
+                    self.role = Role.SEARCH
+                    self.action()
+                    return True
 
-                    if self.has_space() != 0:
-                        return True
+                if self.has_space() != 0:
+                    return True
 
             else:
                 if self.role == Role.FLEE:
