@@ -37,12 +37,12 @@ def main():
 
     environment.add_path(6, 7, 3, 15)
 
-    environment.add_supply(3, 1000, -1)
+    environment.add_supply(3, 300, -1)
 
-    environment.add_supply(5, 1000, 1)
+    environment.add_supply(5, 300, 1)
 
-    environment.add_supply(6, 1000, -1)
-    environment.add_supply(6, 1000, 1)
+    environment.add_supply(6, 300, -1)
+    environment.add_supply(6, 300, 1)
 
     environment.add_anthill("Home", [0])
 
