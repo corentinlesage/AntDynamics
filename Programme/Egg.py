@@ -58,9 +58,9 @@ class Egg(Ant):
         """
         temp = random.random()
         if temp < 0.3:
-            self.home.colony.append(Soldier(self.home, self.element))
+            Soldier(self.home, self.element)
         else:
-            self.home.colony.append(Worker(self.home, self.element, 10))
+            Worker(self.home, self.element, 10)
 
         self.__delete__()
 

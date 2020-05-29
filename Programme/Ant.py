@@ -25,7 +25,7 @@ class Ant(Animal):
         self.age.append(0)
         self.age.append(lifespan)
 
-        anthill.list_ant_at_home.append(self)
+        anthill.colony.append(self)
 
     def __delete__(self):
         """
@@ -47,16 +47,7 @@ class Ant(Animal):
         Return True if the conditions are met
         else False
         """
-        if self.life[0] <= 0: return False
-
-        if self.hunger[0] > 0:
-            self.hunger[0] -= 1
-        else:
-            return False
-
-        if self.thirst[0] > 0:
-            self.thirst[0] -= 1
-        else:
+        if not Animal.alive(self):
             return False
 
         if self.age[0] < self.age[1]:

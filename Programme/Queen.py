@@ -18,6 +18,7 @@ class Queen(Ant):
         Constructor
         """
         Ant.__init__(self, element, 10, 4, 1, 30, 30, anthill, 1000)
+
         self.lay_rate = 15
         self.role = Role.PASSIVE
 
@@ -49,7 +50,7 @@ class Queen(Ant):
         return False
 
     def lay_egg(self):
-        self.home.colony.append(Egg(self.home, self.element))
+        Egg(self.home, self.element)
 
     def post(self):
         """

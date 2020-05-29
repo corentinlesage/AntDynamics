@@ -50,7 +50,7 @@ def main():
 
     n = 1
 
-    while n <= 300:#1000
+    while n <= 150:#1000
 
         print("\nTurn number", n)
 

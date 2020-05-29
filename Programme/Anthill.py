@@ -38,13 +38,12 @@ class Anthill:
         self.entrance = entrance
 
         self.colony = list()
-        self.colony.append(Queen(self, entrance[0]))
-        # self.colony.append(Soldier(self, entrance[0]))
-        # self.colony.append(Worker(self, entrance[0], 10))
 
         self.storage = list()
         self.storage.append(100)
         self.storage.append(100)
+
+        Queen(self, entrance[0])
 
     def refill(self, type):
         """
