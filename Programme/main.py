@@ -11,26 +11,38 @@ def main():
     environment = Environment()
     data = list()
 
-    environment.add_element(1, 15, 10, 10)
-    environment.add_element(3, 12, 12, 12)
-    environment.add_element(1, 21, 9, 7)
+    environment.add_element(4, 15, 10, 10)
+    environment.add_element(3, 12, 12, 10)
+    environment.add_element(2, 21, 11, 8)
+    environment.add_element(4, 16, 6, 10)
+    environment.add_element(3, 10, 10, 12)
+    environment.add_element(1, 20, 14, 12)
+    environment.add_element(3, 14, 16, 8)
+    environment.add_element(4, 18, 14, 6)
 
-    environment.add_element(3, 16, 8, 12)
-    environment.add_element(3, 10, 5, 8)
+    environment.add_path(0, 1, 1, 21)
+    environment.add_path(0, 2, 1, 17)
+    environment.add_path(0, 4, 2, 16)
 
-    environment.add_element(1, 20, 7, 15)
+    environment.add_path(1, 2, 1, 19)
+    environment.add_path(1, 5, 2, 12)
+    environment.add_path(1, 6, 3, 17)
 
-    environment.add_path(0, 1, 3, 13)
-    environment.add_path(0, 2, 2, 15)
+    environment.add_path(2, 3, 3, 14)
+    environment.add_path(2, 7, 2, 15)
 
-    environment.add_path(1, 3, 1, 14)
-    environment.add_path(2, 4, 2, 12)
+    environment.add_path(3, 4, 3, 14)
 
-    environment.add_path(4, 5, 2, 15)
-    environment.add_path(3, 5, 1, 20)
+    environment.add_path(4, 5, 3, 12)
+
+    environment.add_path(6, 7, 3, 15)
 
     environment.add_supply(3, 1000, -1)
-    environment.add_supply(4, 1000, 1)
+
+    environment.add_supply(5, 1000, 1)
+
+    environment.add_supply(6, 1000, -1)
+    environment.add_supply(6, 1000, 1)
 
     environment.add_anthill("Home", [0])
 
@@ -38,7 +50,7 @@ def main():
 
     n = 1
 
-    while n <= 1000:
+    while n <= 300:#1000
 
         print("\nTurn number", n)
 

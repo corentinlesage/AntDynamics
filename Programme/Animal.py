@@ -223,7 +223,7 @@ class Animal(ABC):
                             self.element.remove_animal(self)
                             self.element = path.get_end()
 
-                            self.is_travelling = path.cost - 1
+                            self.is_travelling = path.cost
                             self.path = path
                             path.capacity[0] += self.size
                             return True
